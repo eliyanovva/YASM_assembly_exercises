@@ -6,6 +6,8 @@ LF equ 10 ; line feed
 NULL equ 0 ; end of string
 TRUE equ 1
 FALSE equ 0
+SUCCESS equ 1
+NOSUCCESS equ 0
 EXIT_SUCCESS equ 0 ; success code
 STDIN equ 0 ; standard input
 STDOUT equ 1 ; standard output
@@ -112,21 +114,25 @@ openInputFile:
     mov rdi, qword[fileDesc]
     syscall
 
+    mov rax, SUCCESS
     jmp exampleDone
 
 ; Error on open
 errorOnOpen:
     mov rdi, errMsgOpen
     call printString
+    mov rax, NOSUCCESS
     jmp exampleDone
 
 ; Error on write
 errorOnWrite:
     mov rdi, errMsgWrite
     call printString
+    mov rax, NOSUCCESS
     jmp exampleDone
 
 exampleDone:
+
     ret
 
 
